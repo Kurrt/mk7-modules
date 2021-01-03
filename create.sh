@@ -49,17 +49,17 @@ create_template() {
 
     cp -r examplemodule $MODULE_NAME
 
-    grep -rl examplemodule $MODULE_NAME/ | xargs sed -i "s/examplemodule/$MODULE_NAME/g"
-    grep -rl example-module $MODULE_NAME/ | xargs sed -i "s/example-module/$MODULE_NAME/g"
-    grep -rl example-service $MODULE_NAME/ | xargs sed -i "s/example-service/$MODULE_NAME/g"
-    grep -rl ExampleModuleComponent $MODULE_NAME/ | xargs sed -i "s/ExampleModuleComponent/${MODULE_NAME}Component/g"
-    grep -rl ExampleServiceService $MODULE_NAME/ | xargs sed -i "s/ExampleServiceService/${MODULE_NAME}Service/g"
-    grep -rl ExampleModuleModule $MODULE_NAME/ | xargs sed -i "s/ExampleModuleModule/${MODULE_NAME}Module/g"
+    grep -rl examplemodule $MODULE_NAME/ | xargs sed -i '' -e "s/examplemodule/$MODULE_NAME/g"
+    grep -rl example-module $MODULE_NAME/ | xargs sed -i '' -e "s/example-module/$MODULE_NAME/g"
+    grep -rl example-service $MODULE_NAME/ | xargs sed -i '' -e "s/example-service/$MODULE_NAME/g"
+    grep -rl ExampleModuleComponent $MODULE_NAME/ | xargs sed -i '' -e "s/ExampleModuleComponent/${MODULE_NAME}Component/g"
+    grep -rl ExampleServiceService $MODULE_NAME/ | xargs sed -i '' -e "s/ExampleServiceService/${MODULE_NAME}Service/g"
+    grep -rl ExampleModuleModule $MODULE_NAME/ | xargs sed -i '' -e "s/ExampleModuleModule/${MODULE_NAME}Module/g"
     
-    grep -rl "the Example Module!" $MODULE_NAME/ | xargs sed -i "s/the Example Module!/${MODULE_NAME}/g"
-    grep -rl ": \"Example Module" $MODULE_NAME/ | xargs sed -i "s/: \"Example Module/: \"${MODULE_TITLE}/g"
-    grep -rl "An example module!" $MODULE_NAME/ | xargs sed -i "s/An example module!/${MODULE_DESC}/g"
-    grep -rl ": \"Hak5" $MODULE_NAME/ | xargs sed -i "s/: \"Hak5/: \"${MODULE_AUTHOR}/g"
+    grep -rl "the Example Module!" $MODULE_NAME/ | xargs sed -i '' -e "s/the Example Module!/${MODULE_NAME}/g"
+    grep -rl ": \"Example Module" $MODULE_NAME/ | xargs sed -i '' -e "s/: \"Example Module/: \"${MODULE_TITLE}/g"
+    grep -rl "An example module!" $MODULE_NAME/ | xargs sed -i '' -e "s/An example module!/${MODULE_DESC}/g"
+    grep -rl ": \"Hak5" $MODULE_NAME/ | xargs sed -i '' -e "s/: \"Hak5/: \"${MODULE_AUTHOR}/g"
 
     mv $MODULE_NAME/projects/examplemodule $MODULE_NAME/projects/$MODULE_NAME
     mv $MODULE_NAME/projects/$MODULE_NAME/src/lib/components/example-module.component.html $MODULE_NAME/projects/$MODULE_NAME/src/lib/components/$MODULE_NAME.component.html
