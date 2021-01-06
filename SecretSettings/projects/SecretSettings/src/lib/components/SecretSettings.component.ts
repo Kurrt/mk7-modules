@@ -39,12 +39,17 @@ export class SecretSettingsComponent implements OnInit {
         {value: 'wep+shared', viewValue: 'WEP Shared'}
     ];
 
-    interfaces: string[] = [
-        "wlan0",
-        "wlan1",
-        "wlan2"
-    ];
+    module_name: string = 'SecretSettings';
+    interfaces: string[] = [];
 
+
+    loading = {
+        'settings': true,
+        'interfaces': true,
+        'managementAP': true,
+        'openAP': true,
+        'pineAP': true
+    }
 
     saveOpenAP(): void {
         console.log("saveOpenAP");
@@ -60,7 +65,54 @@ export class SecretSettingsComponent implements OnInit {
         console.log("savePineAP");
     }
 
+    loadSettings(): void {
+        this.makeAPICall('load_settings', (response) => {
+            console.log(response);
+            this.settingsLoaded();
+        });
+    }
+
+    loadInterfaces(): void {
+        this.makeAPICall('load_interfaces', (response) => {
+            this.interfaces = response;
+            this.interfacesLoaded();
+        });
+    }
+
+    makeAPICall(action: string, callback): void {
+        return this.API.request({
+            module: this.module_name,
+            action: action
+        }, (response) => {
+            if (response) {
+                if (response.error !== undefined)
+                    this.handleError(response.error);
+                else
+                    callback(response);
+            } else {
+                this.handleError('No response from the module. (Call: '+action+')');
+            }
+        });
+    }
+
+    handleError(error: string): void {
+        console.log(error);
+    }
+
+    settingsLoaded(): void {
+        this.loading.settings = false;
+        this.loading.managementAP = false;
+        this.loading.openAP = false;
+    }
+
+    interfacesLoaded(): void {
+        this.loading.interfaces = false;
+        this.loading.pineAP = false;
+    }
+
 
     ngOnInit() {
+        this.loadSettings();
+        this.loadInterfaces();
     }
 }
